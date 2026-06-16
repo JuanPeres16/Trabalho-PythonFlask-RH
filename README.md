@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PeopleFlow
 
 
@@ -128,3 +129,7 @@ Filtros opcionais:
 - O middleware de autenticacao protege as rotas privadas usando `session`.
 - As senhas sao armazenadas com `generate_password_hash` do Werkzeug.
 - O CRUD principal do trabalho e o de colaboradores.
+=======
+# Trabalho-PythonFlask-RH
+Sistema web de gestão de colaboradores e auditoria com Flask, arquitetura MVC, MySQL e MongoDB. Possui autenticação, CRUD completo, logs de auditoria, exportação XML/PDF, dashboard com Chart.js e ambiente Docker para execução.
+>>>>>>> d97fb3bbb9005f866eed2b939fba78edcce20ed7
