@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Login - PeopleFlow{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h1>PeopleFlow</h1>
+    <p class="muted">Acesse o sistema de gestao de colaboradores.</p>
+    <form method="post" action="{{ url_for('auth.login') }}" class="form" data-validate>
+        <label>E-mail
+            <input type="email" name="email" required autofocus>
+        </label>
+        <label>Senha
+            <input type="password" name="password" required>
+        </label>
+        <button class="button primary" type="submit">Entrar</button>
+    </form>
+    <p class="auth-footer">
+        Ainda nao tem conta? <a href="{{ url_for('auth.register') }}">Cadastrar usuario</a>
+    </p>
+</div>
+{% endblock %}

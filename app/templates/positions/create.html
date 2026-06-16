@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Novo cargo - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Cargos / Novo</p>
+        <h1>Novo cargo</h1>
+    </div>
+</div>
+<form method="post" action="{{ url_for('positions.store') }}" class="form panel" data-validate>
+    <label>Departamento
+        <select name="department_id" required>
+            <option value="">Selecione</option>
+            {% for department in departments %}
+            <option value="{{ department.id }}">{{ department.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Nome
+        <input type="text" name="name" required>
+    </label>
+    <label>Descricao
+        <textarea name="description" rows="4"></textarea>
+    </label>
+    <div class="form-actions">
+        <button class="button primary" type="submit">Salvar</button>
+        <a class="button ghost" href="{{ url_for('positions.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

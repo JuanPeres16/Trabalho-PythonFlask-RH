@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Cadastro - PeopleFlow{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h1>Criar usuario</h1>
+    <p class="muted">Cadastre um usuario para acessar o sistema.</p>
+    <form method="post" action="{{ url_for('auth.register') }}" class="form" data-validate>
+        <label>Nome
+            <input type="text" name="name" required>
+        </label>
+        <label>E-mail
+            <input type="email" name="email" required>
+        </label>
+        <label>Senha
+            <input type="password" name="password" required minlength="6">
+        </label>
+        <button class="button primary" type="submit">Cadastrar</button>
+    </form>
+    <p class="auth-footer">
+        Ja tem conta? <a href="{{ url_for('auth.login') }}">Entrar</a>
+    </p>
+</div>
+{% endblock %}

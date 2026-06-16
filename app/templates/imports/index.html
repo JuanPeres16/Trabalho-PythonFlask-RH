@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Importar e exportar - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Importar e Exportar</p>
+        <h1>Importar e exportar JSON</h1>
+    </div>
+</div>
+
+<section class="grid-two">
+    <div class="panel">
+        <div class="panel-title"><h2>Exportacao</h2></div>
+        <div class="button-list">
+            <a class="button secondary" href="{{ url_for('json.export', entity='employees') }}">Exportar colaboradores</a>
+            <a class="button secondary" href="{{ url_for('json.export', entity='departments') }}">Exportar departamentos</a>
+            <a class="button secondary" href="{{ url_for('json.export', entity='positions') }}">Exportar cargos</a>
+            <a class="button secondary" href="{{ url_for('json.export', entity='skills') }}">Exportar habilidades</a>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-title"><h2>Importacao</h2></div>
+        <form class="form compact" method="post" action="{{ url_for('json.import_entity', entity='employees') }}" enctype="multipart/form-data">
+            <label>Colaboradores
+                <input type="file" name="file" accept=".json" required>
+            </label>
+            <button class="button primary" type="submit">Importar colaboradores</button>
+        </form>
+        <form class="form compact" method="post" action="{{ url_for('json.import_entity', entity='departments') }}" enctype="multipart/form-data">
+            <label>Departamentos
+                <input type="file" name="file" accept=".json" required>
+            </label>
+            <button class="button secondary" type="submit">Importar departamentos</button>
+        </form>
+        <form class="form compact" method="post" action="{{ url_for('json.import_entity', entity='positions') }}" enctype="multipart/form-data">
+            <label>Cargos
+                <input type="file" name="file" accept=".json" required>
+            </label>
+            <button class="button secondary" type="submit">Importar cargos</button>
+        </form>
+        <form class="form compact" method="post" action="{{ url_for('json.import_entity', entity='skills') }}" enctype="multipart/form-data">
+            <label>Habilidades
+                <input type="file" name="file" accept=".json" required>
+            </label>
+            <button class="button secondary" type="submit">Importar habilidades</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

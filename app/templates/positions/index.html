@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Cargos - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Cargos</p>
+        <h1>Cargos</h1>
+    </div>
+    <a class="button primary" href="{{ url_for('positions.create') }}">Novo cargo</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Nome</th><th>Departamento</th><th>Descricao</th><th>Acoes</th></tr></thead>
+        <tbody>
+            {% for position in positions %}
+            <tr>
+                <td><strong>{{ position.name }}</strong></td>
+                <td>{{ position.department.name if position.department else "-" }}</td>
+                <td>{{ position.description or "-" }}</td>
+                <td class="actions">
+                    <a class="button small secondary" href="{{ url_for('positions.edit', id=position.id) }}">Editar</a>
+                    <form method="post" action="{{ url_for('positions.destroy_post', id=position.id) }}" data-confirm="Excluir cargo?">
+                        <button class="button small danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="empty">Nenhum cargo cadastrado.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

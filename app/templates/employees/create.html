@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Novo colaborador - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Colaboradores / Novo</p>
+        <h1>Novo colaborador</h1>
+    </div>
+</div>
+
+<form method="post" action="{{ url_for('employees.store') }}" class="form panel" enctype="multipart/form-data" data-validate>
+    <div class="form-grid">
+        <label>Nome
+            <input type="text" name="name" required>
+        </label>
+        <label>E-mail
+            <input type="email" name="email" required>
+        </label>
+        <label>Telefone
+            <input type="text" name="phone">
+        </label>
+        <label>Documento
+            <input type="text" name="document" required>
+        </label>
+        <label>Data de nascimento
+            <input type="date" name="birth_date">
+        </label>
+        <label>Data de admissao
+            <input type="date" name="admission_date" required>
+        </label>
+        <label>Cargo
+            <select name="position_id" required>
+                <option value="">Selecione</option>
+                {% for position in positions %}
+                <option value="{{ position.id }}">{{ position.name }} - {{ position.department.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Status
+            <select name="status" required>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+        </label>
+        <label>Foto
+            <input type="file" name="photo" accept=".png,.jpg,.jpeg,.webp">
+        </label>
+    </div>
+
+    <fieldset>
+        <legend>Habilidades</legend>
+        <div class="checkbox-grid">
+            {% for skill in skills %}
+            <label><input type="checkbox" name="skill_ids" value="{{ skill.id }}"> {{ skill.name }}</label>
+            {% else %}
+            <span class="muted">Cadastre habilidades para associar ao colaborador.</span>
+            {% endfor %}
+        </div>
+    </fieldset>
+
+    <div class="form-actions">
+        <button class="button primary" type="submit">Salvar</button>
+        <a class="button ghost" href="{{ url_for('employees.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

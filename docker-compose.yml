@@ -1,0 +1,93 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: peopleflow_app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+    networks:
+      - peopleflow_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: peopleflow_mysql
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: peopleflow
+      MYSQL_USER: peopleflow_user
+      MYSQL_PASSWORD: peopleflow_password
+    volumes:
+      - peopleflow_mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - peopleflow_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo:
+    image: mongo:7
+    container_name: peopleflow_mongo
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - peopleflow_mongo_data:/data/db
+    networks:
+      - peopleflow_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: peopleflow_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - peopleflow_network
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: peopleflow_mongo_express
+    restart: unless-stopped
+    ports:
+      - "8082:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
+    networks:
+      - peopleflow_network
+
+volumes:
+  peopleflow_mysql_data:
+  peopleflow_mongo_data:
+
+networks:
+  peopleflow_network:
+    driver: bridge

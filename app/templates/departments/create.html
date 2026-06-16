@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Novo departamento - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Departamentos / Novo</p>
+        <h1>Novo departamento</h1>
+    </div>
+</div>
+<form method="post" action="{{ url_for('departments.store') }}" class="form panel" data-validate>
+    <label>Nome
+        <input type="text" name="name" required>
+    </label>
+    <label>Descricao
+        <textarea name="description" rows="4"></textarea>
+    </label>
+    <div class="form-actions">
+        <button class="button primary" type="submit">Salvar</button>
+        <a class="button ghost" href="{{ url_for('departments.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

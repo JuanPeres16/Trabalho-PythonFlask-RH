@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Departamentos - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Departamentos</p>
+        <h1>Departamentos</h1>
+    </div>
+    <a class="button primary" href="{{ url_for('departments.create') }}">Novo departamento</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Nome</th><th>Descricao</th><th>Acoes</th></tr></thead>
+        <tbody>
+            {% for department in departments %}
+            <tr>
+                <td><strong>{{ department.name }}</strong></td>
+                <td>{{ department.description or "-" }}</td>
+                <td class="actions">
+                    <a class="button small secondary" href="{{ url_for('departments.edit', id=department.id) }}">Editar</a>
+                    <form method="post" action="{{ url_for('departments.destroy_post', id=department.id) }}" data-confirm="Excluir departamento?">
+                        <button class="button small danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" class="empty">Nenhum departamento cadastrado.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

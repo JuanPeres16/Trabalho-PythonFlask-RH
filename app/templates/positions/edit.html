@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Editar cargo - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Cargos / Editar</p>
+        <h1>Editar cargo</h1>
+    </div>
+</div>
+<form method="post" action="{{ url_for('positions.update_post', id=position.id) }}" class="form panel" data-validate>
+    <label>Departamento
+        <select name="department_id" required>
+            {% for department in departments %}
+            <option value="{{ department.id }}" {% if position.department_id == department.id %}selected{% endif %}>{{ department.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Nome
+        <input type="text" name="name" value="{{ position.name }}" required>
+    </label>
+    <label>Descricao
+        <textarea name="description" rows="4">{{ position.description or "" }}</textarea>
+    </label>
+    <div class="form-actions">
+        <button class="button primary" type="submit">Atualizar</button>
+        <a class="button ghost" href="{{ url_for('positions.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

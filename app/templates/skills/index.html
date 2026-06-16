@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Habilidades - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Habilidades</p>
+        <h1>Habilidades</h1>
+    </div>
+    <a class="button primary" href="{{ url_for('skills.create') }}">Nova habilidade</a>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Nome</th><th>Acoes</th></tr></thead>
+        <tbody>
+            {% for skill in skills %}
+            <tr>
+                <td><strong>{{ skill.name }}</strong></td>
+                <td class="actions">
+                    <a class="button small secondary" href="{{ url_for('skills.edit', id=skill.id) }}">Editar</a>
+                    <form method="post" action="{{ url_for('skills.destroy_post', id=skill.id) }}" data-confirm="Excluir habilidade?">
+                        <button class="button small danger" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="2" class="empty">Nenhuma habilidade cadastrada.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

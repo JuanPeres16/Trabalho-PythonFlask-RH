@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Editar departamento - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Departamentos / Editar</p>
+        <h1>Editar departamento</h1>
+    </div>
+</div>
+<form method="post" action="{{ url_for('departments.update_post', id=department.id) }}" class="form panel" data-validate>
+    <label>Nome
+        <input type="text" name="name" value="{{ department.name }}" required>
+    </label>
+    <label>Descricao
+        <textarea name="description" rows="4">{{ department.description or "" }}</textarea>
+    </label>
+    <div class="form-actions">
+        <button class="button primary" type="submit">Atualizar</button>
+        <a class="button ghost" href="{{ url_for('departments.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

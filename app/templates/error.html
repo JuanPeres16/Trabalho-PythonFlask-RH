@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Erro - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Erro</p>
+        <h1>Algo saiu do esperado</h1>
+        <p class="muted">{{ message }} Codigo {{ status_code }}.</p>
+    </div>
+</div>
+<a class="button primary" href="{{ url_for('dashboard.index') }}">Voltar ao dashboard</a>
+{% endblock %}

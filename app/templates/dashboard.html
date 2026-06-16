@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Dashboard</p>
+        <h1>Dashboard</h1>
+    </div>
+</div>
+
+<section class="metrics-grid">
+    <article class="metric"><span>Colaboradores</span><strong>{{ total_employees }}</strong></article>
+    <article class="metric"><span>Departamentos</span><strong>{{ total_departments }}</strong></article>
+    <article class="metric"><span>Cargos</span><strong>{{ total_positions }}</strong></article>
+    <article class="metric"><span>Habilidades</span><strong>{{ total_skills }}</strong></article>
+    <article class="metric"><span>Ativos</span><strong>{{ active_employees }}</strong></article>
+    <article class="metric"><span>Inativos</span><strong>{{ inactive_employees }}</strong></article>
+</section>
+
+<section class="grid-two">
+    <div class="panel">
+        <div class="panel-title">
+            <h2>Colaboradores por departamento</h2>
+        </div>
+        <canvas id="employeesByDepartmentChart" height="130"></canvas>
+    </div>
+    <div class="panel">
+        <div class="panel-title">
+            <h2>Ultimas Ações</h2>
+        </div>
+        <div class="log-list">
+            {% for log in logs %}
+            <div class="log-item">
+                <strong>{{ log.get("acao", "-") }}</strong>
+                <span>{{ log.get("usuario", "anonimo") }}</span>
+                <small>{{ log.get("tipo_evento", "-") }}</small>
+            </div>
+            {% else %}
+            <p class="muted">Nenhum log registrado ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

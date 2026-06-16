@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ employee.name }} - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Colaboradores / Detalhes</p>
+        <h1>{{ employee.name }}</h1>
+    </div>
+    <a class="button secondary" href="{{ url_for('employees.edit', id=employee.id) }}">Editar</a>
+</div>
+
+<section class="profile">
+    <div>
+        {% if employee.photo_path %}
+        <img class="profile-photo" src="{{ url_for('static', filename=employee.photo_path) }}" alt="{{ employee.name }}">
+        {% else %}
+        <div class="profile-photo placeholder">{{ employee.name[:1] }}</div>
+        {% endif %}
+    </div>
+    <div class="panel">
+        <dl class="details">
+            <dt>E-mail</dt><dd>{{ employee.email }}</dd>
+            <dt>Telefone</dt><dd>{{ employee.phone or "-" }}</dd>
+            <dt>Documento</dt><dd>{{ employee.document }}</dd>
+            <dt>Departamento</dt><dd>{{ employee.department.name if employee.department else "-" }}</dd>
+            <dt>Cargo</dt><dd>{{ employee.position.name if employee.position else "-" }}</dd>
+            <dt>Status</dt><dd><span class="badge {{ employee.status }}">{{ employee.status }}</span></dd>
+            <dt>Nascimento</dt><dd>{{ employee.birth_date.strftime('%d/%m/%Y') if employee.birth_date else "-" }}</dd>
+            <dt>Admissao</dt><dd>{{ employee.admission_date.strftime('%d/%m/%Y') if employee.admission_date else "-" }}</dd>
+            <dt>Habilidades</dt>
+            <dd>
+                {% for skill in employee.skills %}
+                <span class="tag">{{ skill.name }}</span>
+                {% else %}
+                -
+                {% endfor %}
+            </dd>
+        </dl>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Nova habilidade - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Habilidades / Nova</p>
+        <h1>Nova habilidade</h1>
+    </div>
+</div>
+<form method="post" action="{{ url_for('skills.store') }}" class="form panel" data-validate>
+    <label>Nome
+        <input type="text" name="name" required>
+    </label>
+    <div class="form-actions">
+        <button class="button primary" type="submit">Salvar</button>
+        <a class="button ghost" href="{{ url_for('skills.index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

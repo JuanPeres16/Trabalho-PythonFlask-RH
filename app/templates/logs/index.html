@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Logs - PeopleFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="breadcrumb">PeopleFlow / Logs</p>
+        <h1>Logs do sistema</h1>
+    </div>
+    <a class="button primary" href="{{ url_for('logs.export_xml', usuario=filters.get('usuario'), acao=filters.get('acao'), data_inicial=filters.get('data_inicial'), data_final=filters.get('data_final')) }}">Exportar XML</a>
+</div>
+
+<form method="get" class="filters">
+    <input type="search" name="usuario" placeholder="Usuario" value="{{ filters.get('usuario', '') }}">
+    <input type="search" name="acao" placeholder="Acao" value="{{ filters.get('acao', '') }}">
+    <input type="date" name="data_inicial" value="{{ filters.get('data_inicial', '') }}">
+    <input type="date" name="data_final" value="{{ filters.get('data_final', '') }}">
+    <button class="button secondary" type="submit">Filtrar</button>
+    <a class="button ghost" href="{{ url_for('logs.index') }}">Limpar</a>
+</form>
+
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Data</th><th>Usuario</th><th>Acao</th><th>Evento</th><th>Origem</th></tr></thead>
+        <tbody>
+            {% for log in logs %}
+            {% set ts = log.get('timestamp') %}
+            <tr>
+                <td>{{ ts.strftime('%d/%m/%Y %H:%M:%S') if ts else "-" }}</td>
+                <td>{{ log.get("usuario", "-") }}</td>
+                <td>{{ log.get("acao", "-") }}</td>
+                <td>{{ log.get("tipo_evento", "-") }}</td>
+                <td>{{ log.get("ip", "-") }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="empty">Nenhum log encontrado.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
